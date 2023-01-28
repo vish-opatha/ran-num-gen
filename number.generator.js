@@ -1,4 +1,3 @@
-let numberOfRows = 0;
 const submitBtn = document.getElementById("btnSubmit");
 
 let myStr='';
@@ -6,18 +5,12 @@ let newSet = new Set();
 
 function spliceNumbers(numArray){
     let numbers = [];
-
-    // if(!(numArray.inclues(','))){
-
-    // }
     numbers = numArray.trim().split(",");
     
     if (numbers.length<6){
         window.alert("Ha ha ha, you need at least 6 numbers");
         return;
     }
-
-    // if()
     
     return numbers;
 }
@@ -51,13 +44,11 @@ submitBtn?.addEventListener('click', function(event){
     let numbersGiven = document.getElementById("numbersOfChoice").value;
     let rowCount = document.getElementById('numberOfRepeats').value;
     let displayEl = document.getElementById('displayStr');
-    console.log('ROW COUNT',rowCount);
     let rows = parseInt(rowCount);
     let splicedArray= spliceNumbers(numbersGiven);
+    myStr = '';
     
     generateRandomRows(rows,splicedArray);
     
-    console.log(newSet);
-    console.log(myStr);
     displayEl.innerHTML = myStr;
 });
