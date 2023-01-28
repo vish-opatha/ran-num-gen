@@ -1,38 +1,63 @@
-let numbersRequired = 6;
 let numberOfRows = 0;
 const submitBtn = document.getElementById("btnSubmit");
-let luckyString = '';
 
-let arrayOfNumbers = [];
+let myStr='';
+let newSet = new Set();
+
 function spliceNumbers(numArray){
-    arrayOfNumbers = numArray.trim().split(",");
-    return arrayOfNumbers;
+    let numbers = [];
+
+    // if(!(numArray.inclues(','))){
+
+    // }
+    numbers = numArray.trim().split(",");
+    
+    if (numbers.length<6){
+        window.alert("Ha ha ha, you need at least 6 numbers");
+        return;
+    }
+
+    // if()
+    
+    return numbers;
 }
 
-function randomSelect(arrayOfNumbers, numberOfRows){
-    console.log('********* INSIDE RANDOME SELECT');
+function generateNumbers(numArray){
+    let arrayLength = numArray.length;
+    let a;
+    
+    while(newSet.size<6){
+        a = Math.floor(Math.random() * arrayLength );
+        newSet.add(numArray[a]);
+    }
+    
+    newSet.forEach((el)=>{
+        myStr = myStr + `${el} `;
+    });
+    
+    myStr = `${myStr} </br>`;
+    newSet.clear();
+}
 
-    const len = (arrayOfNumbers.length); 
-    console.log('********* AFTER LEN', len);
-    let pushArray = [];
-    for(let i=0; i<len; i++){
-        const a = Math.floor(Math.random() * len );
-        let isGiven = pushArray.find(a);
-        luckyString =+ arrayOfNumbers[a];
-        console.log(`***** Random number ${a} | lucky string ${luckyString} | IS GIVEN ${isGiven} `);
+function generateRandomRows(rowCount, numArray){
+    let i =0;
+    for(i; i<rowCount; i++){
+        generateNumbers(numArray);
     }
 }
 
-
-
-
 submitBtn?.addEventListener('click', function(event){
-event.preventDefault();
-let numbersGiven = document.getElementById("numbersOfChoice").value;
-let arrayOfNumbers = spliceNumbers(numbersGiven);
-console.log(arrayOfNumbers);
-
-numberOfRows = 8;
-
-randomSelect(arrayOfNumbers, numberOfRows);
+    event.preventDefault();
+    let numbersGiven = document.getElementById("numbersOfChoice").value;
+    let rowCount = document.getElementById('numberOfRepeats').value;
+    let displayEl = document.getElementById('displayStr');
+    console.log('ROW COUNT',rowCount);
+    let rows = parseInt(rowCount);
+    let splicedArray= spliceNumbers(numbersGiven);
+    
+    generateRandomRows(rows,splicedArray);
+    
+    console.log(newSet);
+    console.log(myStr);
+    displayEl.innerHTML = myStr;
 });
